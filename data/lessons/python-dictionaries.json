@@ -1,0 +1,8 @@
+{
+  "id": "python-dictionaries",
+  "title": "Python Dictionaries",
+  "description": "Learn how to work with dictionaries in Python, including creation, manipulation, and common operations.",
+  "duration": "18 minutes",
+  "difficulty": "Beginner",
+  "markdownFile": "python-dictionaries.md"
+}

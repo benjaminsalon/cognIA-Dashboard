@@ -29,6 +29,48 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Docker
+
+The application can be run using Docker and Docker Compose.
+
+### Using Docker Compose (Recommended)
+
+Build and run the application:
+
+```bash
+docker-compose up -d
+```
+
+The application will be available at [http://localhost:3000](http://localhost:3000).
+
+To stop the application:
+
+```bash
+docker-compose down
+```
+
+To rebuild after making changes:
+
+```bash
+docker-compose up -d --build
+```
+
+### Using Docker directly
+
+Build the image:
+
+```bash
+docker build -t quiz-app .
+```
+
+Run the container:
+
+```bash
+docker run -p 3000:3000 -v $(pwd)/data:/app/data quiz-app
+```
+
+**Note:** The `data` directory is mounted as a volume to persist lessons, quiz results, and user progress across container restarts.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
