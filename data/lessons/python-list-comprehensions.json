@@ -1,0 +1,8 @@
+{
+  "id": "python-list-comprehensions",
+  "title": "Python List Comprehensions",
+  "description": "Learn how to create lists efficiently using Python list comprehensions.",
+  "duration": "20 minutes",
+  "difficulty": "Intermediate",
+  "markdownFile": "python-list-comprehensions.md"
+}

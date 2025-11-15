@@ -1,0 +1,13 @@
+{
+  "name": "Alex Johnson",
+  "email": "alex.johnson@example.com",
+  "avatar": "👤",
+  "level": 12,
+  "xp": 3420,
+  "xpToNextLevel": 500,
+  "streak": 7,
+  "totalQuizzes": 24,
+  "completedLessons": 18,
+  "totalFlashcards": 156,
+  "masteredFlashcards": 89
+}

@@ -1,0 +1,8 @@
+{
+  "id": "error-handling-python",
+  "title": "Error Handling in Python",
+  "description": "Learn how to handle errors and exceptions in Python using try/except blocks.",
+  "duration": "15 minutes",
+  "difficulty": "Beginner",
+  "markdownFile": "error-handling-python.md"
+}

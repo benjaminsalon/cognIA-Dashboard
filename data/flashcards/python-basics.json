@@ -1,0 +1,58 @@
+{
+  "id": "python-basics",
+  "name": "Python Basics",
+  "description": "Fundamental Python programming concepts",
+  "totalCards": 10,
+  "cards": [
+    {
+      "id": 1,
+      "front": "What keyword is used to define a function in Python?",
+      "back": "def"
+    },
+    {
+      "id": 2,
+      "front": "How do you add comments in Python?",
+      "back": "Use # for single-line comments or triple quotes ''' for multi-line comments"
+    },
+    {
+      "id": 3,
+      "front": "What is the result of: len([1, 2, 3])?",
+      "back": "3"
+    },
+    {
+      "id": 4,
+      "front": "How do you create a list in Python?",
+      "back": "Use square brackets: my_list = [1, 2, 3]"
+    },
+    {
+      "id": 5,
+      "front": "What does ** operator do in Python?",
+      "back": "Exponentiation operator. For example, 2**3 equals 8"
+    },
+    {
+      "id": 6,
+      "front": "How do you import a module in Python?",
+      "back": "Use the import keyword: import module_name"
+    },
+    {
+      "id": 7,
+      "front": "What is a tuple in Python?",
+      "back": "An immutable ordered collection of items, created with parentheses: (1, 2, 3)"
+    },
+    {
+      "id": 8,
+      "front": "What is the difference between append() and extend() for lists?",
+      "back": "append() adds a single item to the end of the list, while extend() adds all items from an iterable"
+    },
+    {
+      "id": 9,
+      "front": "How do you get the last item of a list?",
+      "back": "Use negative indexing: my_list[-1]"
+    },
+    {
+      "id": 10,
+      "front": "What is a dictionary in Python?",
+      "back": "An unordered collection of key-value pairs, created with curly braces: {'key': 'value'}"
+    }
+  ]
+}

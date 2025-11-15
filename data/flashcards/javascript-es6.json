@@ -1,0 +1,48 @@
+{
+  "id": "javascript-es6",
+  "name": "JavaScript ES6",
+  "description": "Modern JavaScript features introduced in ES6",
+  "totalCards": 8,
+  "cards": [
+    {
+      "id": 1,
+      "front": "What is the arrow function syntax in ES6?",
+      "back": "const functionName = (param) => { return value; } or const functionName = param => value for single expression"
+    },
+    {
+      "id": 2,
+      "front": "What is destructuring in ES6?",
+      "back": "A syntax for extracting values from arrays or objects into distinct variables. Example: const {name, age} = person"
+    },
+    {
+      "id": 3,
+      "front": "What are template literals?",
+      "back": "String literals using backticks that allow embedded expressions: `Hello ${name}`"
+    },
+    {
+      "id": 4,
+      "front": "What is the spread operator?",
+      "back": "The ... operator that expands an iterable into individual elements. Example: [...array1, ...array2]"
+    },
+    {
+      "id": 5,
+      "front": "What is let and const?",
+      "back": "Block-scoped variable declarations introduced in ES6. let is mutable, const is immutable"
+    },
+    {
+      "id": 6,
+      "front": "What are default parameters?",
+      "back": "Function parameters that have default values if not provided: function greet(name = 'Guest') {}"
+    },
+    {
+      "id": 7,
+      "front": "What are Promises in ES6?",
+      "back": "Objects representing the eventual completion or failure of an asynchronous operation"
+    },
+    {
+      "id": 8,
+      "front": "What is the difference between map() and forEach()?",
+      "back": "map() returns a new array with transformed elements, while forEach() performs an action but returns undefined"
+    }
+  ]
+}

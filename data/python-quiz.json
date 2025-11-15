@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "question": "What is the correct way to define a function in Python?",
+    "options": [
+      "function myFunction():",
+      "def myFunction():",
+      "define myFunction():",
+      "function myFunction()"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 2,
+    "question": "Which of the following is used to add comments in Python?",
+    "options": [
+      "// This is a comment",
+      "/* This is a comment */",
+      "# This is a comment",
+      "<!-- This is a comment -->"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 3,
+    "question": "What does the 'len()' function do in Python?",
+    "options": [
+      "Returns the length of an object",
+      "Returns the largest number in a list",
+      "Returns the last element of a list",
+      "Returns the type of an object"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "id": 4,
+    "question": "How do you create a list in Python?",
+    "options": [
+      "list = (1, 2, 3)",
+      "list = [1, 2, 3]",
+      "list = {1, 2, 3}",
+      "list = <1, 2, 3>"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 5,
+    "question": "What is the output of: print(2 ** 3)?",
+    "options": [
+      "6",
+      "8",
+      "9",
+      "23"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 6,
+    "question": "Which keyword is used to handle exceptions in Python?",
+    "options": [
+      "catch",
+      "exception",
+      "try/except",
+      "error"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "id": 7,
+    "question": "What is the result of: 'hello'[1:3]?",
+    "options": [
+      "he",
+      "el",
+      "ll",
+      "lo"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "id": 8,
+    "question": "How do you import a module in Python?",
+    "options": [
+      "include module_name",
+      "import module_name",
+      "require module_name",
+      "load module_name"
+    ],
+    "correctAnswer": 1
+  }
+]

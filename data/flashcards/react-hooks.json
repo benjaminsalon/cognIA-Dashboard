@@ -1,0 +1,43 @@
+{
+  "id": "react-hooks",
+  "name": "React Hooks",
+  "description": "Understanding React Hooks for functional components",
+  "totalCards": 7,
+  "cards": [
+    {
+      "id": 1,
+      "front": "What is useState hook?",
+      "back": "A React hook that allows you to add state to functional components. Returns [state, setState]"
+    },
+    {
+      "id": 2,
+      "front": "What is useEffect hook?",
+      "back": "A React hook that lets you perform side effects in functional components, similar to componentDidMount and componentDidUpdate"
+    },
+    {
+      "id": 3,
+      "front": "What is the dependency array in useEffect?",
+      "back": "The second parameter of useEffect that controls when the effect runs. Empty array [] means run once on mount"
+    },
+    {
+      "id": 4,
+      "front": "What is useContext hook?",
+      "back": "A React hook that allows you to access context values without prop drilling"
+    },
+    {
+      "id": 5,
+      "front": "What is useCallback hook?",
+      "back": "A React hook that returns a memoized callback function, useful for preventing unnecessary re-renders"
+    },
+    {
+      "id": 6,
+      "front": "What is useMemo hook?",
+      "back": "A React hook that returns a memoized value, useful for expensive calculations"
+    },
+    {
+      "id": 7,
+      "front": "Can hooks be called conditionally?",
+      "back": "No, hooks must be called at the top level of a component, not inside loops, conditions, or nested functions"
+    }
+  ]
+}

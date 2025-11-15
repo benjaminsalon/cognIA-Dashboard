@@ -1,0 +1,8 @@
+{
+  "id": "python-functions-and-modules",
+  "title": "Python Functions and Modules",
+  "description": "Learn how to create reusable functions and organize your code with modules in Python.",
+  "duration": "25 minutes",
+  "difficulty": "Intermediate",
+  "markdownFile": "python-functions-and-modules.md"
+}
