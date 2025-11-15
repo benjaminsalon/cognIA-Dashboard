@@ -5,14 +5,14 @@ export async function GET() {
   try {
     // Get all available lessons
     const availableLessons = await getAllLessons();
-    const availableLessonIds = availableLessons.map((lesson: any) => lesson.id);
+    const availableLessonIds = availableLessons.map((lesson) => lesson.id);
 
     // Get completed lessons
     const completedLessons = await getCompletedLessons();
 
     // Find the first lesson that hasn't been completed
     const nextLessonId = availableLessonIds.find(
-      (lessonId: string) => !completedLessons.includes(lessonId)
+      (lessonId) => !completedLessons.includes(lessonId)
     );
 
     if (!nextLessonId) {
@@ -27,7 +27,7 @@ export async function GET() {
     }
 
     // Find the lesson data
-    const nextLesson = availableLessons.find((lesson: any) => lesson.id === nextLessonId);
+    const nextLesson = availableLessons.find((lesson) => lesson.id === nextLessonId);
 
     if (!nextLesson) {
       return NextResponse.json(

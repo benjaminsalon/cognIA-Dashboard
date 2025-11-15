@@ -8,7 +8,7 @@ export async function GET() {
     return NextResponse.json(
       {
         success: true,
-        lessons: lessons.map((lesson: any) => ({
+        lessons: lessons.map((lesson) => ({
           id: lesson.id,
           title: lesson.title,
           description: lesson.description,

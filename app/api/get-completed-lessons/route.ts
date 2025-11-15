@@ -17,14 +17,14 @@ export async function GET() {
 
     // Get all lessons and filter for completed ones
     const allLessons = await getAllLessons();
-    const completedLessons = allLessons.filter((lesson: any) =>
+    const completedLessons = allLessons.filter((lesson) =>
       completedLessonIds.includes(lesson.id)
     );
 
     return NextResponse.json(
       {
         success: true,
-        completedLessons: completedLessons.map((lesson: any) => ({
+        completedLessons: completedLessons.map((lesson) => ({
           id: lesson.id,
           title: lesson.title,
           description: lesson.description,

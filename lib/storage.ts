@@ -3,6 +3,16 @@
  * Uses filesystem for local development and Vercel KV for production
  */
 
+export interface Lesson {
+  id: string;
+  title: string;
+  description: string;
+  duration: string;
+  difficulty: string;
+  content?: string;
+  markdownFile?: string;
+}
+
 // Check if we're in a Vercel environment
 function isVercelEnv(): boolean {
   return process.env.VERCEL === "1" || !!process.env.KV_REST_API_URL;
@@ -15,7 +25,7 @@ const LESSON_IDS_KEY = "lesson:ids";
 const COMPLETED_LESSONS_KEY = "completed:lessons";
 
 // Filesystem storage (for local development)
-async function getLessonFromFS(lessonId: string) {
+async function getLessonFromFS(lessonId: string): Promise<Lesson | null> {
   const fs = await import("fs");
   const path = await import("path");
   
@@ -26,7 +36,7 @@ async function getLessonFromFS(lessonId: string) {
     return null;
   }
   
-  const lessonData = JSON.parse(fs.readFileSync(lessonJsonPath, "utf-8"));
+  const lessonData = JSON.parse(fs.readFileSync(lessonJsonPath, "utf-8")) as Lesson;
   const markdownPath = path.join(lessonsDir, lessonData.markdownFile || `${lessonId}.md`);
   
   if (fs.existsSync(markdownPath)) {
@@ -36,7 +46,7 @@ async function getLessonFromFS(lessonId: string) {
   return lessonData;
 }
 
-async function getAllLessonsFromFS() {
+async function getAllLessonsFromFS(): Promise<Lesson[]> {
   const fs = await import("fs");
   const path = await import("path");
   
@@ -48,11 +58,11 @@ async function getAllLessonsFromFS() {
   
   const files = fs.readdirSync(lessonsDir);
   const jsonFiles = files.filter((file) => file.endsWith(".json"));
-  const lessons = [];
+  const lessons: Lesson[] = [];
   
   for (const file of jsonFiles) {
     const filePath = path.join(lessonsDir, file);
-    const lessonData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    const lessonData = JSON.parse(fs.readFileSync(filePath, "utf-8")) as Lesson;
     lessons.push({
       id: lessonData.id,
       title: lessonData.title,
@@ -65,7 +75,7 @@ async function getAllLessonsFromFS() {
   return lessons.sort((a, b) => a.id.localeCompare(b.id));
 }
 
-async function saveLessonToFS(lessonData: any) {
+async function saveLessonToFS(lessonData: Lesson & { markdownContent: string }): Promise<void> {
   const fs = await import("fs");
   const path = await import("path");
   
@@ -132,12 +142,12 @@ async function getKVClient() {
   }
 }
 
-async function getLessonFromKV(lessonId: string) {
+async function getLessonFromKV(lessonId: string): Promise<Lesson | null> {
   const kv = await getKVClient();
   if (!kv) return null;
   
-  const lessonData = await kv.get(`${LESSON_PREFIX}${lessonId}`);
-  const content = await kv.get(`${LESSON_CONTENT_PREFIX}${lessonId}`);
+  const lessonData = await kv.get<Lesson>(`${LESSON_PREFIX}${lessonId}`);
+  const content = await kv.get<string>(`${LESSON_CONTENT_PREFIX}${lessonId}`);
   
   if (!lessonData) return null;
   
@@ -147,24 +157,24 @@ async function getLessonFromKV(lessonId: string) {
   };
 }
 
-async function getAllLessonsFromKV() {
+async function getAllLessonsFromKV(): Promise<Lesson[]> {
   const kv = await getKVClient();
   if (!kv) return [];
   
   const lessonIds = await kv.get<string[]>(LESSON_IDS_KEY) || [];
-  const lessons = [];
-  
+  const lessons: Lesson[] = [];
+
   for (const id of lessonIds) {
-    const lesson = await kv.get(`${LESSON_PREFIX}${id}`);
+    const lesson = await kv.get<Lesson>(`${LESSON_PREFIX}${id}`);
     if (lesson) {
       lessons.push(lesson);
     }
   }
   
-  return lessons.sort((a: any, b: any) => a.id.localeCompare(b.id));
+  return lessons.sort((a, b) => a.id.localeCompare(b.id));
 }
 
-async function saveLessonToKV(lessonData: any) {
+async function saveLessonToKV(lessonData: Lesson & { markdownContent: string }): Promise<void> {
   const kv = await getKVClient();
   if (!kv) return;
   
@@ -202,21 +212,21 @@ async function saveCompletedLessonsToKV(completedLessons: string[]) {
 }
 
 // Public API
-export async function getLesson(lessonId: string) {
+export async function getLesson(lessonId: string): Promise<Lesson | null> {
   if (isVercelEnv()) {
     return await getLessonFromKV(lessonId);
   }
   return await getLessonFromFS(lessonId);
 }
 
-export async function getAllLessons() {
+export async function getAllLessons(): Promise<Lesson[]> {
   if (isVercelEnv()) {
     return await getAllLessonsFromKV();
   }
   return await getAllLessonsFromFS();
 }
 
-export async function saveLesson(lessonData: any) {
+export async function saveLesson(lessonData: Lesson & { markdownContent: string }): Promise<void> {
   if (isVercelEnv()) {
     return await saveLessonToKV(lessonData);
   }
