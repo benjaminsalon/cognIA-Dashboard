@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { getLesson } from "@/lib/storage";
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,39 +12,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Load lesson metadata from JSON file
-    const lessonsDir = path.join(process.cwd(), "data", "lessons");
-    const lessonJsonPath = path.join(lessonsDir, `${lessonId}.json`);
+    const lesson = await getLesson(lessonId);
 
-    if (!fs.existsSync(lessonJsonPath)) {
+    if (!lesson) {
       return NextResponse.json(
         { success: false, error: "Lesson not found" },
         { status: 404 }
       );
     }
 
-    const lessonJson = fs.readFileSync(lessonJsonPath, "utf-8");
-    const lessonData = JSON.parse(lessonJson);
-
-    // Load markdown content
-    const markdownPath = path.join(lessonsDir, lessonData.markdownFile);
-
-    if (!fs.existsSync(markdownPath)) {
-      return NextResponse.json(
-        { success: false, error: "Lesson content not found" },
-        { status: 404 }
-      );
-    }
-
-    const markdownContent = fs.readFileSync(markdownPath, "utf-8");
-
     return NextResponse.json(
       {
         success: true,
-        lesson: {
-          ...lessonData,
-          content: markdownContent,
-        },
+        lesson,
       },
       { status: 200 }
     );

@@ -226,6 +226,44 @@ def test_get_lessons():
     return all_passed
 
 
+def test_reset_lessons():
+    """Test 3: Reset all lessons"""
+    print("\n" + "=" * 60)
+    print("TEST 3: Resetting All Lessons")
+    print("=" * 60)
+    
+    try:
+        url = f"{BASE_URL}/api/reset-lessons"
+        print(f"Sending POST request to: {url}")
+        print("⚠️  WARNING: This will delete all lesson files!")
+        
+        # Ask for confirmation (optional - you can remove this for automated testing)
+        response = requests.post(
+            url,
+            headers={"Content-Type": "application/json"},
+            timeout=10
+        )
+        
+        print(f"\nStatus Code: {response.status_code}")
+        result = response.json()
+        print(f"Response: {json.dumps(result, indent=2)}")
+        
+        if response.status_code == 200 and result.get("success"):
+            deleted_count = result.get("deletedCount", 0)
+            print(f"\n✅ TEST 3 PASSED: Reset successful! Deleted {deleted_count} files.")
+            return True
+        else:
+            print(f"\n❌ TEST 3 FAILED: {result.get('error', 'Unknown error')}")
+            return False
+            
+    except requests.exceptions.ConnectionError:
+        print(f"\n❌ TEST 3 FAILED: Could not connect to {BASE_URL}")
+        return False
+    except Exception as e:
+        print(f"\n❌ TEST 3 FAILED: {str(e)}")
+        return False
+
+
 def main():
     """Run all tests"""
     print("\n" + "=" * 60)
@@ -245,12 +283,20 @@ def main():
     
     test2_passed = test_get_lessons()
     
+    # Wait a bit before reset test
+    time.sleep(1)
+    
+    # Optional: Uncomment to test reset functionality
+    # test3_passed = test_reset_lessons()
+    test3_passed = True  # Skip reset test by default
+    
     # Summary
     print("\n" + "=" * 60)
     print("TEST SUMMARY")
     print("=" * 60)
     print(f"Test 1 (Receive Lesson): {'✅ PASSED' if test1_passed else '❌ FAILED'}")
     print(f"Test 2 (Get Lessons): {'✅ PASSED' if test2_passed else '❌ FAILED'}")
+    print(f"Test 3 (Reset Lessons): {'⏭️  SKIPPED' if test3_passed else '❌ FAILED'}")
     
     if test1_passed and test2_passed:
         print("\n🎉 All tests passed!")

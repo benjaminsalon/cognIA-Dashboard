@@ -1,20 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { getAllLessons, getCompletedLessons } from "@/lib/storage";
 
 export async function GET() {
   try {
-    // Load completed lessons
-    const dataDir = path.join(process.cwd(), "data");
-    const completedLessonsPath = path.join(dataDir, "completed-lessons.json");
-    let completedLessonIds: string[] = [];
+    const completedLessonIds = await getCompletedLessons();
 
-    if (fs.existsSync(completedLessonsPath)) {
-      const fileData = fs.readFileSync(completedLessonsPath, "utf-8");
-      completedLessonIds = JSON.parse(fileData);
-    }
-
-    // If no completed lessons, return empty array
     if (completedLessonIds.length === 0) {
       return NextResponse.json(
         {
@@ -25,31 +15,22 @@ export async function GET() {
       );
     }
 
-    // Load metadata for all completed lessons
-    const lessonsDir = path.join(process.cwd(), "data", "lessons");
-    const completedLessons = [];
-
-    for (const lessonId of completedLessonIds) {
-      const lessonJsonPath = path.join(lessonsDir, `${lessonId}.json`);
-
-      if (fs.existsSync(lessonJsonPath)) {
-        const lessonJson = fs.readFileSync(lessonJsonPath, "utf-8");
-        const lessonData = JSON.parse(lessonJson);
-
-        completedLessons.push({
-          id: lessonData.id,
-          title: lessonData.title,
-          description: lessonData.description,
-          duration: lessonData.duration,
-          difficulty: lessonData.difficulty,
-        });
-      }
-    }
+    // Get all lessons and filter for completed ones
+    const allLessons = await getAllLessons();
+    const completedLessons = allLessons.filter((lesson: any) =>
+      completedLessonIds.includes(lesson.id)
+    );
 
     return NextResponse.json(
       {
         success: true,
-        completedLessons,
+        completedLessons: completedLessons.map((lesson: any) => ({
+          id: lesson.id,
+          title: lesson.title,
+          description: lesson.description,
+          duration: lesson.duration,
+          difficulty: lesson.difficulty,
+        })),
       },
       { status: 200 }
     );

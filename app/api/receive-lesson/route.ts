@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { saveLesson } from "@/lib/storage";
 
 interface LessonData {
   id: string;
@@ -33,28 +32,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create lessons directory if it doesn't exist
-    const lessonsDir = path.join(process.cwd(), "data", "lessons");
-    if (!fs.existsSync(lessonsDir)) {
-      fs.mkdirSync(lessonsDir, { recursive: true });
-    }
-
-    // Save JSON metadata file
-    const jsonPath = path.join(lessonsDir, `${lessonData.id}.json`);
-    const jsonData = {
-      id: lessonData.id,
-      title: lessonData.title,
-      description: lessonData.description,
-      duration: lessonData.duration,
-      difficulty: lessonData.difficulty,
-      markdownFile: `${lessonData.id}.md`,
-    };
-
-    fs.writeFileSync(jsonPath, JSON.stringify(jsonData, null, 2), "utf-8");
-
-    // Save markdown content file
-    const markdownPath = path.join(lessonsDir, `${lessonData.id}.md`);
-    fs.writeFileSync(markdownPath, lessonData.markdownContent, "utf-8");
+    // Save lesson using storage abstraction (works with both FS and KV)
+    await saveLesson(lessonData);
 
     return NextResponse.json(
       {
@@ -79,6 +58,7 @@ export async function GET() {
     {
       success: true,
       message: "Lesson API is ready. Send POST requests with lesson data.",
+      storage: process.env.VERCEL === "1" ? "Vercel KV" : "Filesystem",
       requiredFields: [
         "id",
         "title",

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { getCompletedLessons, saveCompletedLessons } from "@/lib/storage";
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,29 +12,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create data directory if it doesn't exist
-    const dataDir = path.join(process.cwd(), "data");
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir, { recursive: true });
-    }
-
-    // Load or create completed lessons file
-    const completedLessonsPath = path.join(dataDir, "completed-lessons.json");
-    let completedLessons: string[] = [];
-
-    if (fs.existsSync(completedLessonsPath)) {
-      const fileData = fs.readFileSync(completedLessonsPath, "utf-8");
-      completedLessons = JSON.parse(fileData);
-    }
+    // Get current completed lessons
+    const completedLessons = await getCompletedLessons();
 
     // Add lesson if not already completed
     if (!completedLessons.includes(lessonId)) {
       completedLessons.push(lessonId);
-      fs.writeFileSync(
-        completedLessonsPath,
-        JSON.stringify(completedLessons, null, 2),
-        "utf-8"
-      );
+      await saveCompletedLessons(completedLessons);
     }
 
     return NextResponse.json(
